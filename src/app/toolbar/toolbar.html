@@ -1,0 +1,43 @@
+<mat-toolbar>
+
+    <button matButton [matMenuTriggerFor]="menu"> <mat-icon>menu</mat-icon> </button>
+    <mat-menu #menu="matMenu">
+        @if(pagina === "dashboard"){
+        @if(tipoUtente === "manager"){
+        <button mat-menu-item routerLink="/listaUtenti">Tutti gli utenti
+            <mat-icon>
+                article_person
+            </mat-icon>
+        </button>
+        <button mat-menu-item routerLink="/creaUtente">Registra
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        }
+        }
+
+        @if(pagina === "listaUtenti"){
+        @if(tipoUtente === "manager"){
+        <button mat-menu-item routerLink="/dashboard">Dashboard
+            <mat-icon>apps</mat-icon>
+        </button>
+        <button mat-menu-item routerLink="/creaUtente">Registra
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        }
+        }
+
+        <button mat-menu-item routerLink="/creaPrenotazione">Prenota
+            <mat-icon>add</mat-icon>
+        </button>
+        <div>
+            <button mat-menu-item routerLink="">Logout
+                <mat-icon>logout</mat-icon>
+            </button>
+
+        </div>
+
+    </mat-menu>
+
+    <span>Prenotazione</span>
+    <span class="example-spacer"></span>
+</mat-toolbar>

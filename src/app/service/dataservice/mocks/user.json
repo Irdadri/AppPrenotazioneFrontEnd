@@ -1,0 +1,139 @@
+{
+  "content": [
+    {
+      "nome": "Mario",
+      "cognome": "Rossi",
+      "email": "mario.rossi@email.com",
+      "telefono": "3331234567",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Roma",
+      "regione": "Lazio",
+      "indirizzo": "Via Roma 10"
+    },
+    {
+      "nome": "Giulia",
+      "cognome": "Bianchi",
+      "email": "giulia.bianchi@email.com",
+      "telefono": "3332345678",
+      "tipoUtente": "Amministratore",
+      "paese": "Italia",
+      "citta": "Milano",
+      "regione": "Lombardia",
+      "indirizzo": "Via Dante 25"
+    },
+    {
+      "nome": "Luca",
+      "cognome": "Verdi",
+      "email": "luca.verdi@email.com",
+      "telefono": "3333456789",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Torino",
+      "regione": "Piemonte",
+      "indirizzo": "Corso Francia 50"
+    },
+    {
+      "nome": "Anna",
+      "cognome": "Neri",
+      "email": "anna.neri@email.com",
+      "telefono": "3334567890",
+      "tipoUtente": "Operatore",
+      "paese": "Italia",
+      "citta": "Napoli",
+      "regione": "Campania",
+      "indirizzo": "Via Toledo 100"
+    },
+    {
+      "nome": "Francesco",
+      "cognome": "Esposito",
+      "email": "francesco.esposito@email.com",
+      "telefono": "3335678901",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Bari",
+      "regione": "Puglia",
+      "indirizzo": "Via Sparano 15"
+    },
+    {
+      "nome": "Sara",
+      "cognome": "Romano",
+      "email": "sara.romano@email.com",
+      "telefono": "3336789012",
+      "tipoUtente": "Operatore",
+      "paese": "Italia",
+      "citta": "Palermo",
+      "regione": "Sicilia",
+      "indirizzo": "Via Libertà 70"
+    },
+    {
+      "nome": "Davide",
+      "cognome": "Greco",
+      "email": "davide.greco@email.com",
+      "telefono": "3337890123",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Catania",
+      "regione": "Sicilia",
+      "indirizzo": "Via Etnea 120"
+    },
+    {
+      "nome": "Elena",
+      "cognome": "Ferrari",
+      "email": "elena.ferrari@email.com",
+      "telefono": "3338901234",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Verona",
+      "regione": "Veneto",
+      "indirizzo": "Via Mazzini 30"
+    },
+    {
+      "nome": "Matteo",
+      "cognome": "Gallo",
+      "email": "matteo.gallo@email.com",
+      "telefono": "3339012345",
+      "tipoUtente": "Amministratore",
+      "paese": "Italia",
+      "citta": "Bologna",
+      "regione": "Emilia-Romagna",
+      "indirizzo": "Via Indipendenza 45"
+    },
+    {
+      "nome": "Chiara",
+      "cognome": "Conti",
+      "email": "chiara.conti@email.com",
+      "telefono": "3340123456",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Firenze",
+      "regione": "Toscana",
+      "indirizzo": "Via de' Tornabuoni 12"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 10,
+    "sort": {
+      "sorted": false,
+      "unsorted": true,
+      "empty": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 10,
+  "size": 10,
+  "number": 0,
+  "sort": {
+    "sorted": false,
+    "unsorted": true,
+    "empty": true
+  },
+  "first": true,
+  "numberOfElements": 10,
+  "empty": false
+}

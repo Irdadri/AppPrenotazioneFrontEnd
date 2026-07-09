@@ -1,0 +1,21 @@
+<app-toolbar [tipoUtente]="tipoUtente" [pagina]="pagina"></app-toolbar>
+
+
+<mat-card class="mx-auto mt-4 w-75">
+    <mat-card-header>
+        <mat-card-title>{{tableTitle}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <app-table [data]="utenti" [tableHeader]="utentiHeader" [url]="url" [totalPages]="totalPages"
+            [tableTitle]="tableTitle" (pagina)="aPagina($event)">
+        </app-table>
+
+    </mat-card-content>
+</mat-card>
+
+<!--
+<div>
+    <button routerLink="/creaUtente">crea nuovo utente</button>
+    <button (click)="goBack()">indietro</button>
+</div>
+-->

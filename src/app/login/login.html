@@ -1,0 +1,50 @@
+
+
+
+<mat-card class="example-card" appearance="outlined">
+
+  <mat-card-header>
+    <mat-card-title>Accedi</mat-card-title>
+  </mat-card-header>
+
+
+  <mat-card-content>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+      <mat-form-field>
+        <mat-label>
+          email
+        </mat-label>
+        <input matInput type="email" formControlName="email" />
+
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <mat-label>
+          Password
+        </mat-label>
+        <input matInput type="password" formControlName="password" />
+
+      </mat-form-field>
+
+
+      <button mat-raised-button color="primary" type="submit">
+        accedi
+      </button>
+
+      @if(error){
+      <div class="d-flex justify-content-center alert alert-danger" role="alert">
+
+        <p>email o password errati</p>
+
+      </div>
+      }
+
+    </form>
+
+  </mat-card-content>
+
+
+</mat-card>

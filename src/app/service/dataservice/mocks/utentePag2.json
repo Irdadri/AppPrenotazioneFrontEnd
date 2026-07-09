@@ -1,0 +1,51 @@
+{
+  "content": [
+    {
+      "nome": "Matteo",
+      "cognome": "Gallo",
+      "email": "matteo.gallo@email.com",
+      "telefono": "3339012345",
+      "tipoUtente": "Amministratore",
+      "paese": "Italia",
+      "citta": "Bologna",
+      "regione": "Emilia-Romagna",
+      "indirizzo": "Via Indipendenza 45"
+    },
+    {
+      "nome": "Chiara",
+      "cognome": "Conti",
+      "email": "chiara.conti@email.com",
+      "telefono": "3340123456",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Firenze",
+      "regione": "Toscana",
+      "indirizzo": "Via de' Tornabuoni 12"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 2,
+    "pageSize": 4,
+    "sort": {
+      "sorted": false,
+      "unsorted": true,
+      "empty": true
+    },
+    "offset": 8,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 3,
+  "totalElements": 10,
+  "size": 4,
+  "number": 2,
+  "sort": {
+    "sorted": false,
+    "unsorted": true,
+    "empty": true
+  },
+  "first": false,
+  "numberOfElements": 2,
+  "empty": false
+}

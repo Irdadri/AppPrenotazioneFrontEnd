@@ -1,0 +1,73 @@
+{
+  "content": [
+    {
+      "nome": "Mario",
+      "cognome": "Rossi",
+      "email": "mario.rossi@email.com",
+      "telefono": "3331234567",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Roma",
+      "regione": "Lazio",
+      "indirizzo": "Via Roma 10"
+    },
+    {
+      "nome": "Giulia",
+      "cognome": "Bianchi",
+      "email": "giulia.bianchi@email.com",
+      "telefono": "3332345678",
+      "tipoUtente": "Amministratore",
+      "paese": "Italia",
+      "citta": "Milano",
+      "regione": "Lombardia",
+      "indirizzo": "Via Dante 25"
+    },
+    {
+      "nome": "Luca",
+      "cognome": "Verdi",
+      "email": "luca.verdi@email.com",
+      "telefono": "3333456789",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Torino",
+      "regione": "Piemonte",
+      "indirizzo": "Corso Francia 50"
+    },
+    {
+      "nome": "Anna",
+      "cognome": "Neri",
+      "email": "anna.neri@email.com",
+      "telefono": "3334567890",
+      "tipoUtente": "Operatore",
+      "paese": "Italia",
+      "citta": "Napoli",
+      "regione": "Campania",
+      "indirizzo": "Via Toledo 100"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 0,
+    "pageSize": 4,
+    "sort": {
+      "sorted": false,
+      "unsorted": true,
+      "empty": true
+    },
+    "offset": 0,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": false,
+  "totalPages": 3,
+  "totalElements": 10,
+  "size": 4,
+  "number": 0,
+  "sort": {
+    "sorted": false,
+    "unsorted": true,
+    "empty": true
+  },
+  "first": true,
+  "numberOfElements": 4,
+  "empty": false
+}

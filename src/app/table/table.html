@@ -1,0 +1,63 @@
+<!-- 
+<h1>
+    <ul>
+        <li>test</li>
+        @for(prenotazioni of prenotazioniTest; track prenotazioni.id){
+            <li>{{prenotazioni.id}}</li>
+        }
+
+        @for(utente of utenteTest; track utente.email){
+            <li>{{utente.email}}</li>
+        }
+
+    </ul>
+</h1>
+-->
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+
+        <tr>
+            @for(item of tableHeader; track item){
+
+            <th scope="col">{{item.header}}</th>
+            }
+
+        </tr>
+        
+
+
+        @for(datas of data.content; track datas){
+        <tr>
+            @for(item of tableHeader; track $index){
+            <td>{{datas[item.field]}}</td>
+            }
+            <!--
+            <td class="p-2"><button class="btn btn-info my-2" [routerLink]="[url, datas.id]">MODIFICA</button></td>
+            <td class="p-2"><button class="btn btn-danger my-2" (click)="eliminaEvent(datas.id)">ELIMINA</button></td>
+            -->
+            <td><button mat-icon-button [routerLink]="[url, datas.id]">
+                    <mat-icon>edit</mat-icon>
+                </button></td>
+            <td><button mat-icon-button (click)="eliminaEvent(datas.id)">
+                    <mat-icon>delete</mat-icon>
+                </button></td>
+        </tr>
+        
+        }
+
+    </table>
+
+</div>
+
+<nav>
+    <div class="mx-auto p-2 d-flex justify-content-center p-2">
+        <ul class="pagination">
+            @for (page of pages; track page) {
+            <li class="page-item">
+                <a class="page-link" (click)="vaiAPagina(page)">{{page +1}}</a>
+            </li>
+            }
+        </ul>
+    </div>
+</nav>

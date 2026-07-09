@@ -1,0 +1,33 @@
+<div class="container mt-5 w-75">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+
+      @for (field of formConfig; track field) {
+
+      <div class="mb-3" [class]="'col-md-' + (field.cols || 12)">
+        <label class="form-label">{{ field.label }}</label>
+
+        <input [type]="field.type" [formControlName]="field.name" [placeholder]="field.label" class="form-control" />
+
+        @if (form.get(field.name)?.invalid && form.get(field.name)?.touched) {
+        <small class="text-danger">
+          @if (form.get(field.name)?.errors?.['required']) {
+          This field is required
+          }
+        </small>
+        }
+
+      </div>
+
+      }
+
+    </div>
+    <div class="w-50 mx-auto">
+      <button type="submit" [disabled]="form.invalid" class="btn btn-primary w-100">
+        {{ submitLabel }}
+      </button>
+    </div>
+
+  </form>
+</div>

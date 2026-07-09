@@ -1,0 +1,73 @@
+{
+  "content": [
+    {
+      "nome": "Francesco",
+      "cognome": "Esposito",
+      "email": "francesco.esposito@email.com",
+      "telefono": "3335678901",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Bari",
+      "regione": "Puglia",
+      "indirizzo": "Via Sparano 15"
+    },
+    {
+      "nome": "Sara",
+      "cognome": "Romano",
+      "email": "sara.romano@email.com",
+      "telefono": "3336789012",
+      "tipoUtente": "Operatore",
+      "paese": "Italia",
+      "citta": "Palermo",
+      "regione": "Sicilia",
+      "indirizzo": "Via Libertà 70"
+    },
+    {
+      "nome": "Davide",
+      "cognome": "Greco",
+      "email": "davide.greco@email.com",
+      "telefono": "3337890123",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Catania",
+      "regione": "Sicilia",
+      "indirizzo": "Via Etnea 120"
+    },
+    {
+      "nome": "Elena",
+      "cognome": "Ferrari",
+      "email": "elena.ferrari@email.com",
+      "telefono": "3338901234",
+      "tipoUtente": "Cliente",
+      "paese": "Italia",
+      "citta": "Verona",
+      "regione": "Veneto",
+      "indirizzo": "Via Mazzini 30"
+    }
+  ],
+  "pageable": {
+    "pageNumber": 1,
+    "pageSize": 4,
+    "sort": {
+      "sorted": false,
+      "unsorted": true,
+      "empty": true
+    },
+    "offset": 4,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": false,
+  "totalPages": 3,
+  "totalElements": 10,
+  "size": 4,
+  "number": 1,
+  "sort": {
+    "sorted": false,
+    "unsorted": true,
+    "empty": true
+  },
+  "first": false,
+  "numberOfElements": 4,
+  "empty": false
+}

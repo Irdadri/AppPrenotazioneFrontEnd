@@ -1,0 +1,9 @@
+  {
+    "id": 1,
+    "nome": "Mario",
+    "cognome": "Rossi",
+    "email": "mario.rossi@email.com",
+    "password": "Pwd_MarioRossi_01",
+    "tipoUtente": "utente",
+    "telefono": "3331111111"
+  }

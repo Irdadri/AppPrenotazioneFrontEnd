@@ -1,0 +1,9 @@
+ {
+    "id": 2,
+    "nome": "Giulia",
+    "cognome": "Bianchi",
+    "email": "giulia.bianchi@email.com",
+    "password": "Pwd_GiuliaBianchi_02",
+    "tipoUtente": "manager",
+    "telefono": "3332222222"
+  }
