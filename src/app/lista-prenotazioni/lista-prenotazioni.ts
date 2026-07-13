@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input, signal } from '@angular/core';
 import { PrenotazioneService } from '../service/prenotazione/prenotazione-service';
 import { ActivatedRoute } from '@angular/router';
 import { Page } from '../model/Page';
@@ -21,16 +21,27 @@ import { SearchPrenotazione } from '../search-prenotazione/search-prenotazione';
 })
 export class ListaPrenotazioni {
   constructor(private prenotazioneService: PrenotazioneService,
-    private cdr: ChangeDetectorRef
   ) { }
 
-  prenotazioniTest!: Page<PrenotazioneDTO>;
-  tableHeader: IColumnDef<any>[] = [];
-  url = '/prenotazione/modifica/';
-  totalPages: Number = 1;
-  @Input() userId!: Number;
-  @Input() tipoUtente!: String;
-  tableTitle = "Prenotazioni";
+
+  prenotazioniTest = signal<Page<PrenotazioneDTO>>({
+    content: [],
+    totalElements: 0,
+    totalPages: 0,
+    size: 0,
+    number: 0,
+    numberOfElements: 0,
+    first: true,
+    last: true,
+    empty: true,
+  });
+  tableHeader = signal<IColumnDef<any>[]>([]);
+  url = signal<String>('/prenotazione/modifica/');
+
+  userId = input.required<Number>();
+  tipoUtente = input.required<String>();
+  tableTitle = signal<String>("Prenotazioni");
+
   searchPrenotazione: PrenotazioniFiltro = {
     dataInizio: undefined,
     dataFine: undefined,
@@ -38,56 +49,52 @@ export class ListaPrenotazioni {
   };
 
   ngOnInit() {
-    this.prenotazioneService.getPrenotazioniPageOne(this.userId).subscribe(prenotazioni => {
+    this.prenotazioneService.getPrenotazioniPageOne(this.userId()).subscribe(prenotazioni => {
 
-      console.log(this.userId);
-      console.log(this.tipoUtente);
+      console.log(this.userId());
+      console.log(this.tipoUtente());
 
-      if (this.tipoUtente === "manager") {
-        this.tableHeader =
-          this.prenotazioneService.getHeader('manager');
-      } else if (this.tipoUtente === "user") {
-        this.tableHeader =
-          this.prenotazioneService.getHeader('user');
+      if (this.tipoUtente() === "manager") {
+        this.tableHeader.set(this.prenotazioneService.getHeader('manager'));
+
+      } else if (this.tipoUtente() === "user") {
+        this.tableHeader.set(this.prenotazioneService.getHeader('user'));
       }
 
-      this.prenotazioniTest = prenotazioni;
-      console.log("numero pagine  " + this.totalPages);
-      console.log(this.prenotazioniTest);
-      console.log(this.tableHeader);
-      this.cdr.detectChanges();
+      this.prenotazioniTest.set(prenotazioni);
+      console.log(this.prenotazioniTest());
+      console.log(this.tableHeader());
+
     })
   }
 
   eliminaPrenotazioneParent(value: Number) {
     console.log(value);
     this.prenotazioneService.eliminaPrenotazione(value).subscribe(() => {
-      this.loadPrenotazioni(this.userId, this.tipoUtente);
+      this.loadPrenotazioni(this.userId(), this.tipoUtente());
     });
   }
 
   aPagina(page: Number) {
     console.log(page);
 
-    if (this.tipoUtente === "manager") {
+    if (this.tipoUtente() === "manager") {
       this.prenotazioneService.getAllPrenotazioniByFilter(this.searchPrenotazione, page).subscribe(prenotazioni => {
-        this.prenotazioniTest = prenotazioni;
-        this.tableHeader =
-          this.prenotazioneService.getHeader('manager');
+        this.prenotazioniTest.set(prenotazioni);
+        this.tableHeader.set(this.prenotazioneService.getHeader('manager'));
 
         console.log("dal metodo aPagina");
         console.log(this.prenotazioniTest);
         console.log(this.searchPrenotazione);
-        this.cdr.detectChanges();
+
       });
-    } else if (this.tipoUtente === "user") {
+    } else if (this.tipoUtente() === "user") {
       this.prenotazioneService
-        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId, page)
+        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId(), page)
         .subscribe(prenotazioni => {
-          this.prenotazioniTest = prenotazioni;
-          this.tableHeader =
-            this.prenotazioneService.getHeader('user');
-          this.cdr.detectChanges();
+          this.prenotazioniTest.set(prenotazioni);
+          this.tableHeader.set(this.prenotazioneService.getHeader('user'));
+
         });
     }
   }
@@ -104,34 +111,30 @@ export class ListaPrenotazioni {
     }
     console.log(this.searchPrenotazione);
 
-    this.loadPrenotazioni(this.userId, this.tipoUtente);
+    this.loadPrenotazioni(this.userId(), this.tipoUtente());
   }
 
 
 
 
-  
+
 
   loadPrenotazioni(id: Number, tipoUtente: String) {
-    if (this.tipoUtente === "manager") {
+    if (this.tipoUtente() === "manager") {
       this.prenotazioneService.getAllPrenotazioniByFilter(this.searchPrenotazione, 0).subscribe(prenotazioni => {
-        this.prenotazioniTest = prenotazioni;
-        this.tableHeader =
-          this.prenotazioneService.getHeader('manager');
+        this.prenotazioniTest.set(prenotazioni);
+        this.tableHeader.set(this.prenotazioneService.getHeader('manager'));
 
         console.log("dal metodo aPagina");
         console.log(this.prenotazioniTest);
         console.log(this.searchPrenotazione);
-        this.cdr.detectChanges();
       });
-    } else if (this.tipoUtente === "user") {
+    } else if (this.tipoUtente() === "user") {
       this.prenotazioneService
-        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId, 0)
+        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId(), 0)
         .subscribe(prenotazioni => {
-          this.prenotazioniTest = prenotazioni;
-          this.tableHeader =
-            this.prenotazioneService.getHeader('user');
-          this.cdr.detectChanges();
+          this.prenotazioniTest.set(prenotazioni);
+          this.tableHeader.set(this.prenotazioneService.getHeader('user'));
         });
     }
   }

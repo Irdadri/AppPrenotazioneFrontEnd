@@ -1,7 +1,4 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core';
-import { PrenotazioneService } from '../service/prenotazione/prenotazione-service';
-import { UtenteService } from '../service/utente/utente-service';
-import { ActivatedRoute } from '@angular/router';
+import { Component, computed, EventEmitter, Input, input, output, Output } from '@angular/core';
 import { IColumnDef } from '../model/IColumnDef';
 import { RouterLink } from '@angular/router';
 import { Page } from '../model/Page';
@@ -20,41 +17,26 @@ export class Table {
 
   constructor() { }
 
-  private _tableHeader!: IColumnDef<any>[]
-  @Input()
-  set tableHeader(value: any) {
-    console.log("TABLE RICEVE:", value);
-    this._tableHeader = value;
-  }
-  get tableHeader() {
-    return this._tableHeader
-  }
 
-  public totalPages: Number = 10;
-  public _data!: Page<any>;
-  @Input()
-  set data(value: any) {
-    console.log("TABLE RICEVE:", value);
-    this._data = value;
-    this.totalPages = this._data.totalPages;
-  }
-  get data(): Page<any> {
-    return this._data;
-  }
+  public tableTitle = input.required<String>();
+  public tableHeader = input.required<IColumnDef<any>[]>();
+  public data = input.required<Page<any>>();
+  public url = input.required<String>();
 
-  @Input() url!: string;
-  @Input() tableTitle!: string;
-  //paging variables
+  public totalPages = computed(() =>
+    this.data().totalPages
+  );
+  public pages = computed(() =>
+    Array.from({ length: this.totalPages() }, (_, i) => i)
+  );
+  public pageSize = computed(() =>
+    this.data().size
+  );
 
-  @Input() pageSize: Number = 10;
-  pages: number[] = [];
 
-  ngOnChanges() {
-    this.pages = Array(this.totalPages).fill(0).map((_, i) => i);
-  }
 
-  @Output() elimina: EventEmitter<Number> = new EventEmitter<Number>();
-  @Output() pagina: EventEmitter<Number> = new EventEmitter<Number>();
+  elimina = output<Number>();
+  pagina = output<Number>()
 
   eliminaEvent(id: Number) {
     console.log(id);

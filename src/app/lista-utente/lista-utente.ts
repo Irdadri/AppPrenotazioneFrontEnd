@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, input, signal } from '@angular/core';
 import { UtenteDTO } from '../model/UtenteDTO';
 import { IColumnDef } from '../model/IColumnDef';
 import { UtenteService } from '../service/utente/utente-service';
@@ -20,25 +20,32 @@ import { MatDividerModule } from '@angular/material/divider';
 export class ListaUtente {
 
   constructor(private utenteService: UtenteService,
-    private location: Location,
-    private cdr: ChangeDetectorRef
   ) { }
 
 
-  utenti!: Page<UtenteDTO>;
-  utentiHeader: IColumnDef<any>[] = [];
-  url = "/utente/modfica/";
-  tableTitle = "Utenti";
+  utenti = signal<Page<UtenteDTO>>({
+    content: [],
+    totalElements: 0,
+    totalPages: 0,
+    size: 0,
+    number: 0,
+    numberOfElements: 0,
+    first: true,
+    last: true,
+    empty: true,
+  });
 
-  tipoUtente!: String;
+  utentiHeader = signal<IColumnDef<any>[]>([]);
+  url = signal<String>('/utente/modfica/');
+  userId = signal<Number>(0);
+  tipoUtente = signal<String>('');
+  tableTitle = signal<String>("Utenti");
   pagina = "listaUtenti";
-
   ngOnInit() {
     this.utenteService.getUtentiPageOne().subscribe(utenti => {
-      this.utentiHeader = USER_LIST;
-      this.utenti = utenti;
-      this.tipoUtente = sessionStorage.getItem("tipoUtente")!;
-      this.cdr.detectChanges();
+      this.utentiHeader.set(USER_LIST);
+      this.utenti.set(utenti);
+      this.tipoUtente.set(sessionStorage.getItem("tipoUtente")!);
     });
 
   }
@@ -47,20 +54,18 @@ export class ListaUtente {
     console.log(value);
     this.utenteService.eliminaUtente(value).subscribe(() => {
       this.utenteService.getUtentiPageOne().subscribe(utenti => {
-        this.utentiHeader = USER_LIST;
-        this.utenti = utenti;
-        this.tipoUtente = sessionStorage.getItem("tipoUtente")!;
-        this.cdr.detectChanges();
+        this.utentiHeader.set(USER_LIST);
+        this.utenti.set(utenti);
+        this.tipoUtente.set(sessionStorage.getItem("tipoUtente")!);
       });
     });
   }
 
   aPagina(page: Number) {
     this.utenteService.getUtentiNextPage(page, 5).subscribe(utenti => {
-      this.utentiHeader = USER_LIST;
-      this.utenti = utenti;
-      this.tipoUtente = sessionStorage.getItem("tipoUtente")!;
-      this.cdr.detectChanges();
+      this.utentiHeader.set(USER_LIST);
+      this.utenti.set(utenti);
+      this.tipoUtente.set(sessionStorage.getItem("tipoUtente")!);
     });
   }
 }

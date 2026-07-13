@@ -1,7 +1,7 @@
-<app-form
-[formConfig]="creaUtenteFormConfig"
-submitLabel="modifica"
-[data]="utenti"
-[additionalData]="listaRuoli"
-(formSubmit)="onFormSubmit($event)">
+@if(utenti()){
+<app-form [formConfig]="creaUtenteFormConfig()" submitLabel="modifica" [data]="utenti()" [additionalData]="listaRuoli()"
+    (formSubmit)="onFormSubmit($event)">
 </app-form>
+} @else {
+    Loading...
+}

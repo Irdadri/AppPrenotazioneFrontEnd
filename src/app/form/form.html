@@ -3,7 +3,7 @@
 
     <div class="row">
 
-      @for (field of formConfig; track field) {
+      @for (field of formConfig(); track field) {
 
         <div class="mb-3" [class]="'col-md-' + (field.cols || 12)">
           <label class="form-label">{{ field.label }}</label>
@@ -14,7 +14,7 @@
 
               <select class="form-select" [formControlName]="field.name">
 
-                @for (sede of additionalData; track sede.id) {
+                @for (sede of additionalData(); track sede.id) {
 
                   @for (stanza of sede.listStanze; track stanza.id) {
 
@@ -36,7 +36,7 @@
 
               <select class="form-select" [formControlName]="field.name">
 
-                @for (ruolo of additionalData; track ruolo.id) {
+                @for (ruolo of additionalData(); track ruolo.id) {
 
                   <option [value]="ruolo">
                     ruolo: {{ ruolo }}
@@ -82,7 +82,7 @@
         type="submit" 
         [disabled]="form.invalid" 
         class="btn btn-primary w-100">
-        {{ submitLabel }}
+        {{ submitLabel() }}
       </button>
     </div>
 

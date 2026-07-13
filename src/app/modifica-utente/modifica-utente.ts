@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, signal } from '@angular/core';
 import { UtenteDTO } from '../model/UtenteDTO';
 import { UtenteRequest } from '../model/UtenteRequest';
 import { UtenteService } from '../service/utente/utente-service';
@@ -7,6 +7,7 @@ import { Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Form } from '../form/form';
 import { RuoliService } from '../service/ruoli/ruoli-service';
+import { FormDefinitions } from '../model/FormDefinition';
 @Component({
   selector: 'app-modifica-utente',
   imports: [Form],
@@ -15,25 +16,25 @@ import { RuoliService } from '../service/ruoli/ruoli-service';
 })
 export class ModificaUtente {
 
-  utenti?: UtenteDTO;
+  utenti = signal<UtenteDTO | null>(null);
   userId?: Number;
   modifiche?: UtenteRequest;
-  listaRuoli!: String[];
+  listaRuoli = signal<String[]>([]);
 
   constructor(private utenteService: UtenteService, private route: ActivatedRoute, private router: Router,
-    private location: Location, private ruoliService: RuoliService, private cdr: ChangeDetectorRef
+    private ruoliService: RuoliService,
   ) {
   }
   ngOnInit() {
-
     this.route.paramMap.subscribe(params => {
       this.userId = parseInt(params.get('userId')!);
       console.log(this.userId);
       this.utenteService.getUtente(this.userId).subscribe(utenti => {
-        this.utenti = utenti;
+        this.utenti.set(utenti);
+        console.log("da utenti modifica")
+
         this.ruoliService.getRuoliUtente().subscribe(ruoli => {
-          this.listaRuoli = ruoli;
-          this.cdr.detectChanges();
+          this.listaRuoli.set(ruoli);
         })
       });
     })
@@ -42,7 +43,7 @@ export class ModificaUtente {
   }
 
 
-  creaUtenteFormConfig = [
+  creaUtenteFormConfig = signal<FormDefinitions<any>[]>([
     { name: "nome", type: 'text', label: 'nome', cols: 4, validators: [Validators.required] },
     { name: "cognome", type: 'cognome', label: 'cognome', cols: 4, validators: [Validators.required] },
     { name: "email", type: 'email', label: 'email', cols: 4, validators: [Validators.required] },
@@ -50,7 +51,7 @@ export class ModificaUtente {
     { name: "telefono", type: 'number', label: 'telefono', cols: 3, validators: [Validators.required] },
     { name: "tipoUtente", type: 'select', label: 'tipoUtente', cols: 3, validators: [Validators.required] },
     { name: "idSede", type: "number", label: 'idSede', cols: 3, validators: [Validators.required] },
-  ]
+  ]);
 
   onFormSubmit(formData: any) {
     this.modifiche = formData as UtenteRequest;

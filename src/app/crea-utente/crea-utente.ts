@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, signal } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Form } from '../form/form';
 import { UtenteRequest } from '../model/UtenteRequest';
@@ -6,6 +6,7 @@ import { UtenteService } from '../service/utente/utente-service';
 import { Location } from '@angular/common';
 import { RuoliService } from '../service/ruoli/ruoli-service';
 import { Router } from '@angular/router';
+import { FormDefinitions } from '../model/FormDefinition';
 
 @Component({
   selector: 'app-crea-utente',
@@ -16,13 +17,8 @@ import { Router } from '@angular/router';
 export class CreaUtente {
 
   newUtente?: UtenteRequest;
-  listaRuoli!: String[];
-
-  constructor(private utenteService: UtenteService, private router: Router,
-    private ruoliService: RuoliService, private cdr: ChangeDetectorRef
-  ) { }
-
-  creaUtenteFormConfig = [
+  listaRuoli = signal<String[]>([]);
+  creaUtenteFormConfig = signal<FormDefinitions<any>[]>([
     { name: "nome", type: 'text', label: 'nome', cols: 4, validators: [Validators.required] },
     { name: "cognome", type: 'cognome', label: 'cognome', cols: 4, validators: [Validators.required] },
     { name: "email", type: 'email', label: 'email', cols: 4, validators: [Validators.required] },
@@ -30,12 +26,17 @@ export class CreaUtente {
     { name: "telefono", type: 'number', label: 'telefono', cols: 3, validators: [Validators.required] },
     { name: "tipoUtente", type: 'select', label: 'tipoUtente', cols: 3, validators: [Validators.required] },
     { name: "idSede", type: "number", label: 'idSede', cols: 3, validators: [Validators.required] },
-  ]
+  ]);
+
+
+  constructor(private utenteService: UtenteService, private router: Router,
+    private ruoliService: RuoliService
+  ) { }
+
 
   ngOnInit() {
     this.ruoliService.getRuoliUtente().subscribe(ruoli => {
-      this.listaRuoli = ruoli;
-      this.cdr.detectChanges();
+      this.listaRuoli.set(ruoli);
     })
   }
   onFormSubmit(formData: any) {

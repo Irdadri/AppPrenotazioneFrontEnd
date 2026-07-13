@@ -1,6 +1,6 @@
 <mat-card class="mx-auto mt-4 w-75">
     <mat-card-header>
-        <mat-card-title>{{tableTitle}}</mat-card-title>
+        <mat-card-title>{{tableTitle()}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
    
@@ -8,10 +8,9 @@
 
         <mat-divider class="my-3"></mat-divider>
 
-        <app-table [data]="prenotazioniTest" [tableHeader]="tableHeader" [url]="url"
-            [tableTitle]="tableTitle" (elimina)="eliminaPrenotazioneParent($event)" (pagina)="aPagina($event)">
+        <app-table [data]="prenotazioniTest()" [tableHeader]="tableHeader()" [url]="url()"
+            [tableTitle]="tableTitle()" (elimina)="eliminaPrenotazioneParent($event)" (pagina)="aPagina($event)">
         </app-table>
     
-
     </mat-card-content>
 </mat-card>

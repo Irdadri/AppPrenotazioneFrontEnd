@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, input, Input, output, Output, SimpleChanges } from '@angular/core';
 import { FormDefinitions } from '../model/FormDefinition';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,44 +12,36 @@ import { CommonModule } from '@angular/common';
   styleUrl: './form.css',
 })
 export class Form {
-  @Input() formConfig!: FormDefinitions<any>[];
-  @Input() submitLabel: string = 'Submit';
-  @Output() formSubmit = new EventEmitter<any>();
-  form!: FormGroup;
-  private _data: any;
-  @Input()
-  set data(value: any) {
-    this._data = value;
-    this.patchForm(value);
-  }
 
-  private _additionalData: any;
-  @Input()
-  set additionalData(value: any){
-    this._additionalData = value;
-    console.log("form recieve: " + this.additionalData);
-  }
-  get additionalData(){
-    return this._additionalData;
-  }
+  formConfig = input.required<FormDefinitions<any>[]>();
+  submitLabel = input.required<String>();
+  formSubmit = output<any>();
+
+  form!: FormGroup;
+  data = input<any>();
+
+
+  additionalData = input<any>();
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.buildForm();
     console.log('FORM CREATED:', this.form);
-    if (this._data) {
-      this.patchForm(this._data);
+    if (this.data()) {
+      this.patchForm(this.data());
     }
   }
 
   buildForm() {
     let formControls: any = {};
-    this.formConfig.forEach((field) => {
+    this.formConfig().forEach((field) => {
       //null è il valore di default
       formControls[field.name] = [null, field.validators || []];
     });
     this.form = this.fb.group(formControls);
   }
+
 
   private patchForm(value: any): void {
     if (!this.form || !value) {
@@ -58,7 +50,7 @@ export class Form {
 
     const patch: any = {};
 
-    this.formConfig.forEach(field => {
+    this.formConfig().forEach(field => {
       patch[field.name] = value[field.name];
     });
 

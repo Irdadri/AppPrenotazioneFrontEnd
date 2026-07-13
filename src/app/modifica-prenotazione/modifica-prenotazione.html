@@ -1,8 +1,7 @@
-
-<app-form
-[formConfig]="prenotazioneFormConfig"
-submitLabel="modifica"
-[data]="prenotazione"
-[additionalData]="listaSedi"
-(formSubmit)="onFormSubmit($event)">
+@if(prenotazione()){
+<app-form [formConfig]="prenotazioneFormConfig()" submitLabel="modifica" [data]="prenotazione()"
+    [additionalData]="listaSedi()" (formSubmit)="onFormSubmit($event)">
 </app-form>
+}@else {
+    Loading...
+}

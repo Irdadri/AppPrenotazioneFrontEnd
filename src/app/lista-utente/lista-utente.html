@@ -1,13 +1,13 @@
-<app-toolbar [tipoUtente]="tipoUtente" [pagina]="pagina"></app-toolbar>
+<app-toolbar [tipoUtente]="tipoUtente()" [pagina]="pagina"></app-toolbar>
 
 
 <mat-card class="mx-auto mt-4 w-75">
     <mat-card-header>
-        <mat-card-title>{{tableTitle}}</mat-card-title>
+        <mat-card-title>{{tableTitle()}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <app-table [data]="utenti" [tableHeader]="utentiHeader" [url]="url" 
-            [tableTitle]="tableTitle" (pagina)="aPagina($event)" (elimina)="eliminaPrenotazioneParent($event)">
+        <app-table [data]="utenti()" [tableHeader]="utentiHeader()" [url]="url()" 
+            [tableTitle]="tableTitle()" (pagina)="aPagina($event)" (elimina)="eliminaPrenotazioneParent($event)">
         </app-table>
 
     </mat-card-content>

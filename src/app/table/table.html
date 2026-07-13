@@ -3,7 +3,7 @@
     <table class="table table-bordered">
 
         <tr>
-            @for(item of tableHeader; track item){
+            @for(item of tableHeader(); track item){
 
             <th scope="col">{{item.header}}</th>
             }
@@ -12,12 +12,12 @@
         
 
 
-        @for(datas of data.content; track datas){
+        @for(datas of data().content; track datas){
         <tr>
-            @for(item of tableHeader; track $index){
+            @for(item of tableHeader(); track item){
             <td>{{datas[item.field]}}</td>
             }
-            <td><button mat-icon-button [routerLink]="[url, datas.id]">
+            <td><button mat-icon-button [routerLink]="[url(), datas.id]">
                     <mat-icon>edit</mat-icon>
                 </button></td>
             <td><button mat-icon-button (click)="eliminaEvent(datas.id)">
@@ -34,7 +34,7 @@
 <nav>
     <div class="mx-auto p-2 d-flex justify-content-center p-2">
         <ul class="pagination">
-            @for (page of pages; track page) {
+            @for (page of pages(); track page) {
             <li class="page-item">
                 <a class="page-link" (click)="vaiAPagina(page)">{{page +1}}</a>
             </li>

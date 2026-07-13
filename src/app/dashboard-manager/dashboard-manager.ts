@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ListaPrenotazioni } from '../lista-prenotazioni/lista-prenotazioni';
 import { Toolbar } from '../toolbar/toolbar';
@@ -11,17 +11,17 @@ import { Toolbar } from '../toolbar/toolbar';
 })
 export class DashboardManager {
 
-  userId!: Number;
-  tipoUtente!: String;
+  userId = signal<Number>(0);
+  tipoUtente = signal<String>('');
   pagina = "dashboard";
 
   ngOnInit(){
-    this.userId = parseInt(sessionStorage.getItem("userId")!);
+    this.userId.set(parseInt(sessionStorage.getItem("userId")!));
     console.log("utente" + this.userId);
-    this.tipoUtente = sessionStorage.getItem("tipoUtente")!;
+    this.tipoUtente.set(sessionStorage.getItem("tipoUtente")!);
     console.log("tipo utente" + this.tipoUtente);
   }
 
-  
+
 
 }

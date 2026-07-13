@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, output, Output, signal } from '@angular/core';
 import { PrenotazioniFiltro } from '../model/PrenotazioniFiltro';
 import { FormDefinitions } from '../model/FormDefinition';
-import { PrenotazioneDTO } from '../model/PrenotazioneDTO';
+
 import { PrenotazioneService } from '../service/prenotazione/prenotazione-service';
-import { Page } from '../model/Page';
+
 import { Form } from '../form/form';
 
 @Component({
@@ -17,7 +17,7 @@ export class SearchPrenotazione {
   constructor(private prenotazioneService: PrenotazioneService, private cdr: ChangeDetectorRef) { }
 
 
-  cercaPrenotazione!: FormDefinitions<any>[];
+  cercaPrenotazione = signal<FormDefinitions<any>[]>([]);
 
   cercaPrenotazioneFormConfig = [
     { name: "email", type: 'email', label: 'email', cols: 4, validators: undefined },
@@ -34,16 +34,16 @@ export class SearchPrenotazione {
 
   tipoUtente!: String;
   userId!: Number;
-  @Output() searchPrenotazione = new EventEmitter<PrenotazioniFiltro>;
+  searchPrenotazione = output<PrenotazioniFiltro>();
 
   ngOnInit() {
     this.tipoUtente = sessionStorage.getItem('tipoUtente')!;
     this.userId = parseInt(sessionStorage.getItem("userId")!);
 
     if (this.tipoUtente === "manager") {
-      this.cercaPrenotazione = this.cercaPrenotazioneFormConfig;
+      this.cercaPrenotazione.set(this.cercaPrenotazioneFormConfig);
     } else if (this.tipoUtente === "user") {
-      this.cercaPrenotazione = this.cercaPrenotazioniUtente;
+      this.cercaPrenotazione.set(this.cercaPrenotazioniUtente);
     }
   }
 
