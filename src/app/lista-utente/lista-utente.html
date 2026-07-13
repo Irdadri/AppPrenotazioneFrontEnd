@@ -6,16 +6,9 @@
         <mat-card-title>{{tableTitle}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <app-table [data]="utenti" [tableHeader]="utentiHeader" [url]="url" [totalPages]="totalPages"
-            [tableTitle]="tableTitle" (pagina)="aPagina($event)">
+        <app-table [data]="utenti" [tableHeader]="utentiHeader" [url]="url" 
+            [tableTitle]="tableTitle" (pagina)="aPagina($event)" (elimina)="eliminaPrenotazioneParent($event)">
         </app-table>
 
     </mat-card-content>
 </mat-card>
-
-<!--
-<div>
-    <button routerLink="/creaUtente">crea nuovo utente</button>
-    <button (click)="goBack()">indietro</button>
-</div>
--->

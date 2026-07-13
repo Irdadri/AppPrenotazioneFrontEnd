@@ -1,18 +1,3 @@
-<!-- 
-<h1>
-    <ul>
-        <li>test</li>
-        @for(prenotazioni of prenotazioniTest; track prenotazioni.id){
-            <li>{{prenotazioni.id}}</li>
-        }
-
-        @for(utente of utenteTest; track utente.email){
-            <li>{{utente.email}}</li>
-        }
-
-    </ul>
-</h1>
--->
 
 <div class="table-responsive">
     <table class="table table-bordered">
@@ -32,10 +17,6 @@
             @for(item of tableHeader; track $index){
             <td>{{datas[item.field]}}</td>
             }
-            <!--
-            <td class="p-2"><button class="btn btn-info my-2" [routerLink]="[url, datas.id]">MODIFICA</button></td>
-            <td class="p-2"><button class="btn btn-danger my-2" (click)="eliminaEvent(datas.id)">ELIMINA</button></td>
-            -->
             <td><button mat-icon-button [routerLink]="[url, datas.id]">
                     <mat-icon>edit</mat-icon>
                 </button></td>

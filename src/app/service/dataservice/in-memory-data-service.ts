@@ -295,6 +295,7 @@ export class InMemoryDataService implements InMemoryDbService {
 
         const UTENTI_MOCK: UtenteDTO[] = [
             {
+                id: 1,
                 nome: "Mario",
                 cognome: "Rossi",
                 email: "mario.rossi@email.com",
@@ -306,6 +307,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 indirizzo: "Via Roma 10"
             },
             {
+                id:2,
                 nome: "Giulia",
                 cognome: "Bianchi",
                 email: "giulia.bianchi@email.com",
@@ -317,6 +319,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 indirizzo: "Via Dante 25"
             },
             {
+                id:3,
                 nome: "Luca",
                 cognome: "Verdi",
                 email: "luca.verdi@email.com",
@@ -328,6 +331,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 indirizzo: "Corso Francia 50"
             },
             {
+                id:4,
                 nome: "Anna",
                 cognome: "Neri",
                 email: "anna.neri@email.com",
@@ -339,6 +343,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 indirizzo: "Via Toledo 100"
             },
             {
+                id:5,
                 nome: "Francesco",
                 cognome: "Esposito",
                 email: "francesco.esposito@email.com",
@@ -350,6 +355,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 indirizzo: "Via Sparano 15"
             },
             {
+                id:6,
                 nome: "Sara",
                 cognome: "Romano",
                 email: "sara.romano@email.com",
@@ -361,6 +367,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 indirizzo: "Via Libertà 70"
             },
             {
+                id:7,
                 nome: "Davide",
                 cognome: "Greco",
                 email: "davide.greco@email.com",
@@ -372,6 +379,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 indirizzo: "Via Etnea 120"
             },
             {
+                id:8,
                 nome: "Elena",
                 cognome: "Ferrari",
                 email: "elena.ferrari@email.com",
@@ -383,6 +391,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 indirizzo: "Via Mazzini 30"
             },
             {
+                id:9,
                 nome: "Matteo",
                 cognome: "Gallo",
                 email: "matteo.gallo@email.com",
@@ -394,6 +403,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 indirizzo: "Via Indipendenza 45"
             },
             {
+                id:10,
                 nome: "Chiara",
                 cognome: "Conti",
                 email: "chiara.conti@email.com",

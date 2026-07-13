@@ -22,6 +22,16 @@ export class Form {
     this._data = value;
     this.patchForm(value);
   }
+
+  private _additionalData: any;
+  @Input()
+  set additionalData(value: any){
+    this._additionalData = value;
+    console.log("form recieve: " + this.additionalData);
+  }
+  get additionalData(){
+    return this._additionalData;
+  }
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {

@@ -2,5 +2,6 @@
 
 <div>
     <app-form [formConfig]="creaUtenteFormConfig" submitLabel="salva utente"
+    [additionalData]="listaRuoli"
         (formSubmit)="onFormSubmit($event)"></app-form>
 </div>

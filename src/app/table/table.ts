@@ -6,10 +6,10 @@ import { IColumnDef } from '../model/IColumnDef';
 import { RouterLink } from '@angular/router';
 import { Page } from '../model/Page';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-table',
   imports: [RouterLink, MatPaginatorModule, MatButtonModule, MatDividerModule, MatIconModule, MatCardModule],
@@ -20,39 +20,32 @@ export class Table {
 
   constructor() { }
 
-  //prenotazioniTest = input<PrenotazioneDTO>();
-
-  //tipoUtente = input<string>();
-  //idUser = input<Number>();
-  //tableHeader = input<IColumnDef<PrenotazioneDTO>[]>();
-
-
-  //mi serve un tableHeader
-  //e un array di dati, utente o prenotazione
   private _tableHeader!: IColumnDef<any>[]
-  @Input() 
-  set tableHeader(value: any){
+  @Input()
+  set tableHeader(value: any) {
     console.log("TABLE RICEVE:", value);
     this._tableHeader = value;
   }
-  get tableHeader(){
+  get tableHeader() {
     return this._tableHeader
   }
 
+  public totalPages: Number = 10;
   public _data!: Page<any>;
-   @Input()
-  set data(value:any){
-      console.log("TABLE RICEVE:", value);
+  @Input()
+  set data(value: any) {
+    console.log("TABLE RICEVE:", value);
     this._data = value;
+    this.totalPages = this._data.totalPages;
   }
-  get data(): Page<any>{
+  get data(): Page<any> {
     return this._data;
   }
 
   @Input() url!: string;
   @Input() tableTitle!: string;
   //paging variables
-  @Input() totalPages: Number = 10;
+
   @Input() pageSize: Number = 10;
   pages: number[] = [];
 
@@ -68,7 +61,7 @@ export class Table {
     this.elimina.emit(id);
   }
 
-  vaiAPagina(pageNum: Number){
+  vaiAPagina(pageNum: Number) {
     this.pagina.emit(pageNum);
   }
 

@@ -11,16 +11,16 @@ import { Form } from '../form/form';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { ChangeDetectorRef } from '@angular/core';
+import { SearchPrenotazione } from '../search-prenotazione/search-prenotazione';
 
 @Component({
   selector: 'app-lista-prenotazioni',
-  imports: [Table, Form, MatCardModule, MatDividerModule],
+  imports: [Table, MatCardModule, MatDividerModule, SearchPrenotazione],
   templateUrl: './lista-prenotazioni.html',
   styleUrl: './lista-prenotazioni.css',
 })
 export class ListaPrenotazioni {
   constructor(private prenotazioneService: PrenotazioneService,
-    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -31,40 +31,14 @@ export class ListaPrenotazioni {
   @Input() userId!: Number;
   @Input() tipoUtente!: String;
   tableTitle = "Prenotazioni";
-
-  cercaPrenotazioneFormConfig = [
-    { name: "email", type: 'text', label: 'email', cols: 4, validators: undefined },
-    { name: "dataInizio", type: 'date', label: 'dataInizio', cols: 4, validators: undefined },
-    { name: "dataFine", type: 'date', label: 'dataFine', cols: 4, validators: undefined },
-  ]
-  searchPrenotazione!: PrenotazioniFiltro;
+  searchPrenotazione: PrenotazioniFiltro = {
+    dataInizio: undefined,
+    dataFine: undefined,
+    email: undefined,
+  };
 
   ngOnInit() {
-
-    /*
-    if (this.tipoUtente === "manager") {
-      this.prenotazioneService
-        .getPrenotazioniByPage(0)
-        .subscribe(prenotazioni => {
-          this.prenotazioniTest = prenotazioni;
-          this.tableHeader =
-            this.prenotazioneService.getHeader('manager');
-          this.totalPages = this.prenotazioniTest.totalPages;
-          console.log(this.totalPages);
-        });
-      console.log(this.prenotazioniTest);
-    } else if (this.tipoUtente === "utente") {
-      this.prenotazioneService.getPrenotazioniUtente(this.userId).subscribe(prenotazioni => {
-        this.prenotazioniTest = prenotazioni;
-        this.tableHeader =
-          this.prenotazioneService.getHeader('utente');
-        this.totalPages = this.prenotazioniTest.totalPages;
-        console.log(this.totalPages);
-      });
-    }
-      */
-
-    this.prenotazioneService.getPrenotazioniWithPaging(this.userId).subscribe(prenotazioni => {
+    this.prenotazioneService.getPrenotazioniPageOne(this.userId).subscribe(prenotazioni => {
 
       console.log(this.userId);
       console.log(this.tipoUtente);
@@ -78,43 +52,88 @@ export class ListaPrenotazioni {
       }
 
       this.prenotazioniTest = prenotazioni;
-      this.totalPages = this.prenotazioniTest.totalPages;
+      console.log("numero pagine  " + this.totalPages);
       console.log(this.prenotazioniTest);
       console.log(this.tableHeader);
       this.cdr.detectChanges();
     })
   }
 
-  ngOnChanges() {
-
-  }
-
   eliminaPrenotazioneParent(value: Number) {
     console.log(value);
-    this.prenotazioneService.eliminaPrenotazione(value);
+    this.prenotazioneService.eliminaPrenotazione(value).subscribe(() => {
+      this.loadPrenotazioni(this.userId, this.tipoUtente);
+    });
   }
 
   aPagina(page: Number) {
     console.log(page);
+
     if (this.tipoUtente === "manager") {
-      this.prenotazioneService.getPrenotazioniByPage(page).subscribe(prenotazioni => {
+      this.prenotazioneService.getAllPrenotazioniByFilter(this.searchPrenotazione, page).subscribe(prenotazioni => {
         this.prenotazioniTest = prenotazioni;
-      })
-    } else {
-      this.prenotazioneService.getPrenotazioniUtente(this.userId).subscribe(prenotazioni => {
-        this.prenotazioniTest = prenotazioni;
-      })
+        this.tableHeader =
+          this.prenotazioneService.getHeader('manager');
+
+        console.log("dal metodo aPagina");
+        console.log(this.prenotazioniTest);
+        console.log(this.searchPrenotazione);
+        this.cdr.detectChanges();
+      });
+    } else if (this.tipoUtente === "user") {
+      this.prenotazioneService
+        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId, page)
+        .subscribe(prenotazioni => {
+          this.prenotazioniTest = prenotazioni;
+          this.tableHeader =
+            this.prenotazioneService.getHeader('user');
+          this.cdr.detectChanges();
+        });
     }
   }
 
-  onFormSubmit(searchData: any) {
-    this.searchPrenotazione = searchData as PrenotazioniFiltro;
-    this.prenotazioneService
-      .getPrenotazioneByFilter(this.searchPrenotazione)
-      .subscribe(prenotazioni => {
-        this.prenotazioniTest = prenotazioni;
-        this.totalPages = prenotazioni.totalPages;
-      });
+  onFormParent(data: any) {
+    this.searchPrenotazione = data as PrenotazioniFiltro;
+    if (this.searchPrenotazione.email === '') {
+      this.searchPrenotazione.email = undefined;
+    } if (this.searchPrenotazione.dataInizio === '') {
+      this.searchPrenotazione.dataInizio = undefined;
+    }
+    if (this.searchPrenotazione.dataFine === '') {
+      this.searchPrenotazione.dataFine = undefined;
+    }
+    console.log(this.searchPrenotazione);
 
+    this.loadPrenotazioni(this.userId, this.tipoUtente);
   }
+
+
+
+
+  
+
+  loadPrenotazioni(id: Number, tipoUtente: String) {
+    if (this.tipoUtente === "manager") {
+      this.prenotazioneService.getAllPrenotazioniByFilter(this.searchPrenotazione, 0).subscribe(prenotazioni => {
+        this.prenotazioniTest = prenotazioni;
+        this.tableHeader =
+          this.prenotazioneService.getHeader('manager');
+
+        console.log("dal metodo aPagina");
+        console.log(this.prenotazioniTest);
+        console.log(this.searchPrenotazione);
+        this.cdr.detectChanges();
+      });
+    } else if (this.tipoUtente === "user") {
+      this.prenotazioneService
+        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId, 0)
+        .subscribe(prenotazioni => {
+          this.prenotazioniTest = prenotazioni;
+          this.tableHeader =
+            this.prenotazioneService.getHeader('user');
+          this.cdr.detectChanges();
+        });
+    }
+  }
+
 }

@@ -1,5 +1,5 @@
 export interface PrenotazioneRequest{
-    nPostazione: String,
+    npostazione: String,
     dataInizio: String
     dataFine:String;
 }

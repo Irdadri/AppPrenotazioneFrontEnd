@@ -4,8 +4,8 @@ export interface PrenotazioneDTO{
     cognomeUtente: String,
     citta: String,
     indirizzo: String,
-    nStanza: String,
-    nPostazione: Number,
+    nstanza: String,
+    npostazione: Number,
     dataInizio: String,
     dataFine: String,
     stato: String

@@ -9,35 +9,41 @@ import { Page } from '../../model/Page';
 @Service()
 export class UtenteService {
 
-       private http = inject(HttpClient);
-       private url = '/get-user-list';
-       private mockUrl = '/get-mock-user';
+    private http = inject(HttpClient);
+    private url = '/get-user-list';
+    private mockUrl = '/get-mock-user';
+    private realUrl = "http://localhost:8080/dashboard/";
 
-    getUtenti(): Observable<Page<UtenteDTO>>{
-        return this.http.get<Page<UtenteDTO>>(this.url);
+    getUtentiPageOne(): Observable<Page<UtenteDTO>> {
+        return this.http.get<Page<UtenteDTO>>(this.realUrl + "utenti");
     }
+
+    getUtentiNextPage(page: Number, size: Number): Observable<Page<UtenteDTO>> {
+        return this.http.get<Page<UtenteDTO>>(this.realUrl + "utenti" + "?page=" + page + "&" + "size=" + size);
+    }
+    
+    creaUtente(utente: UtenteRequest) {
+        return this.http.post(this.realUrl + "signup", utente);
+    }
+
 
     getPageUtente(page: Number): Observable<Page<UtenteDTO>>{
         return this.http.get<Page<UtenteDTO>>('/getPage' + page);
     }
 
     getUtente(id:Number):Observable<UtenteDTO>{
-        return this.http.get<UtenteDTO>('/getTypeUser');
+        return this.http.get<UtenteDTO>(this.realUrl + "utente?idUtente=" + id);
     }
 
     getMockUtenti():Observable<MockUser[]>{
         return this.http.get<MockUser[]>(this.mockUrl);
     }
 
-    creaUtente(utente:UtenteRequest){
-        return this.http.post<UtenteRequest>;
+    modificaUtente(modifiche: UtenteRequest, id: Number) {
+        return this.http.put<UtenteRequest>(this.realUrl + "aggiornaUtente?idUser=" + id, modifiche);
     }
 
-    modificaUtente(modifiche: UtenteRequest,id: Number){
-        return this.http.put<UtenteRequest>;
-    }
-
-    eliminaUtente(id: Number){
-        return this.http.delete(''+id);
+    eliminaUtente(id: Number) {
+        return this.http.delete<void>(this.realUrl + "deleteUtente/" + id);
     }
 }

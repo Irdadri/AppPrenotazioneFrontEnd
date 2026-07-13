@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Toolbar } from '../toolbar/toolbar';
+
 import { Utente } from '../model/Utente';
 
 
@@ -32,7 +32,6 @@ export class Login {
     password: ''
   }
 
-  //user = {} as MockUser;
   user: Utente | null = null;
   error = false;
 
@@ -43,20 +42,6 @@ export class Login {
 
   login() {
     this.loginRequest = this.loginForm.value as LoginRequest;
-    /*
-    this.loginService.matchUser(this.loginRequest).subscribe(user => this.user = user);
-    console.log(this.user);
-    if(this.user){
-      this.router.navigate(['dashboard/']);
-      sessionStorage.setItem("tipoUtente", this.user.tipoUtente.toString());
-      //sessionStorage.setItem("tipoUtente", "manager");
-      sessionStorage.setItem("userId", this.user.id.toString());
-      //sessionStorage.setItem("userId", "2");
-      
-    } else {
-      this.error = true;
-    }
-      */
 
     this.loginService.login(this.loginRequest).subscribe(utente => {
       this.user = utente;
@@ -64,15 +49,11 @@ export class Login {
       if (this.user) {
         this.router.navigate(['dashboard/']);
         sessionStorage.setItem("tipoUtente", this.user.tipoUtente.toString());
-        //sessionStorage.setItem("tipoUtente", "manager");
         sessionStorage.setItem("userId", this.user.id.toString());
-        //sessionStorage.setItem("userId", "2");
         sessionStorage.setItem("user", JSON.stringify(this.user));
       } else {
         this.error = true;
       }
     })
-
-
   }
 }

@@ -3,12 +3,12 @@
         <mat-card-title>{{tableTitle}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <app-form [formConfig]="cercaPrenotazioneFormConfig" submitLabel="cerca" (formSubmit)="onFormSubmit($event)">
-        </app-form>
+   
+        <app-search-prenotazione (searchPrenotazione)="onFormParent($event)"></app-search-prenotazione>
 
         <mat-divider class="my-3"></mat-divider>
 
-        <app-table [data]="prenotazioniTest" [tableHeader]="tableHeader" [url]="url" [totalPages]="totalPages"
+        <app-table [data]="prenotazioniTest" [tableHeader]="tableHeader" [url]="url"
             [tableTitle]="tableTitle" (elimina)="eliminaPrenotazioneParent($event)" (pagina)="aPagina($event)">
         </app-table>
     

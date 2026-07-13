@@ -8,8 +8,8 @@ export const MANAGER_TABLE_COLUMNS: IColumnDef<PrenotazioneDTO>[] = [
   { header: 'cognome utente', field: 'cognomeUtente' , visible: true},
   { header: 'citta', field: 'citta' },
   { header: 'indirizzo', field: 'indirizzo' },
-  { header: 'numero stanza', field: 'nStanza' },
-  { header: 'numero postazione', field: 'nPostazione' }
+  { header: 'numero stanza', field: 'nstanza' },
+  { header: 'numero postazione', field: 'npostazione' }
 ] ;
 
 
@@ -20,8 +20,8 @@ export const USER_TABLE_COLUMNS: IColumnDef<PrenotazioneDTO>[] = [
   { header: 'cognome utente', field: 'cognomeUtente' , visible: false},
   { header: 'citta', field: 'citta' },
   { header: 'indirizzo', field: 'indirizzo' },
-  { header: 'numero stanza', field: 'nStanza' },
-  { header: 'numero postazione', field: 'nPostazione' }
+  { header: 'numero stanza', field: 'nstanza' },
+  { header: 'numero postazione', field: 'npostazione' }
 ] ;
 
 

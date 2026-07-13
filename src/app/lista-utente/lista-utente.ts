@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { UtenteDTO } from '../model/UtenteDTO';
 import { IColumnDef } from '../model/IColumnDef';
 import { UtenteService } from '../service/utente/utente-service';
@@ -8,8 +8,8 @@ import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Page } from '../model/Page';
 import { Toolbar } from '../toolbar/toolbar';
-import {MatCardModule} from '@angular/material/card';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-lista-utente',
@@ -20,41 +20,47 @@ import {MatDividerModule} from '@angular/material/divider';
 export class ListaUtente {
 
   constructor(private utenteService: UtenteService,
-    private location:Location
+    private location: Location,
+    private cdr: ChangeDetectorRef
   ) { }
 
 
   utenti!: Page<UtenteDTO>;
   utentiHeader: IColumnDef<any>[] = [];
   url = "/utente/modfica/";
-  totalPages: Number = 1;
   tableTitle = "Utenti";
 
   tipoUtente!: String;
   pagina = "listaUtenti";
 
   ngOnInit() {
-    this.utenteService.getPageUtente(0).subscribe(utenti => {
-      this.utenti = utenti;
+    this.utenteService.getUtentiPageOne().subscribe(utenti => {
       this.utentiHeader = USER_LIST;
-      this.totalPages = utenti.totalPages;
+      this.utenti = utenti;
+      this.tipoUtente = sessionStorage.getItem("tipoUtente")!;
+      this.cdr.detectChanges();
     });
 
-    this.tipoUtente = sessionStorage.getItem("tipoUtente")!;
-  }
-
-  goBack(){
-    this.location.back();
   }
 
   eliminaPrenotazioneParent(value: Number) {
     console.log(value);
-    this.utenteService.eliminaUtente(value);
+    this.utenteService.eliminaUtente(value).subscribe(() => {
+      this.utenteService.getUtentiPageOne().subscribe(utenti => {
+        this.utentiHeader = USER_LIST;
+        this.utenti = utenti;
+        this.tipoUtente = sessionStorage.getItem("tipoUtente")!;
+        this.cdr.detectChanges();
+      });
+    });
   }
 
-  aPagina(page: Number){
-     this.utenteService.getPageUtente(page).subscribe(utenti => {
+  aPagina(page: Number) {
+    this.utenteService.getUtentiNextPage(page, 5).subscribe(utenti => {
+      this.utentiHeader = USER_LIST;
       this.utenti = utenti;
+      this.tipoUtente = sessionStorage.getItem("tipoUtente")!;
+      this.cdr.detectChanges();
     });
   }
 }
