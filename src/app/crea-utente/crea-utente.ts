@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, signal } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, Signal, signal } from '@angular/core';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Form } from '../form/form';
 import { UtenteRequest } from '../model/UtenteRequest';
 import { UtenteService } from '../service/utente/utente-service';
@@ -18,6 +18,8 @@ export class CreaUtente {
 
   newUtente?: UtenteRequest;
   listaRuoli = signal<String[]>([]);
+  //duplicateKey = signal<boolean>(false);
+
   creaUtenteFormConfig = signal<FormDefinitions<any>[]>([
     { name: "nome", type: 'text', label: 'nome', cols: 4, validators: [Validators.required] },
     { name: "cognome", type: 'cognome', label: 'cognome', cols: 4, validators: [Validators.required] },
@@ -27,6 +29,9 @@ export class CreaUtente {
     { name: "tipoUtente", type: 'select', label: 'tipoUtente', cols: 3, validators: [Validators.required] },
     { name: "idSede", type: "number", label: 'idSede', cols: 3, validators: [Validators.required] },
   ]);
+
+  form!: FormGroup;
+
 
 
   constructor(private utenteService: UtenteService, private router: Router,
@@ -45,9 +50,31 @@ export class CreaUtente {
     this.utenteService.creaUtente(this.newUtente).subscribe({
       next: () => {
         this.router.navigate(['/listaUtenti']);
+      },
+      error: err => {
+        this.form.get('email')?.setErrors({
+          duplicateKey: true
+        });
       }
     });
     console.log(this.newUtente);
 
   }
+
+  onFormCreated(form: FormGroup) {
+    this.form = form;
+  }
+
+
 }
+
+/*
+
+export function duplicateKeyValidator(value: boolean): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const isValid = !value;
+    return isValid ? null : { 'utente già registrato': true };
+  };
+}
+
+*/

@@ -3,7 +3,7 @@
     <button matButton [matMenuTriggerFor]="menu"> <mat-icon>menu</mat-icon> </button>
     <mat-menu #menu="matMenu">
         @if(pagina === "dashboard"){
-        @if(tipoUtente === "manager"){
+        @if(tipoUtente === Ruoli.amministratore){
         <button mat-menu-item routerLink="/listaUtenti">Tutti gli utenti
             <mat-icon>
                 article_person
@@ -16,7 +16,7 @@
         }
 
         @if(pagina === "listaUtenti"){
-        @if(tipoUtente === "manager"){
+        @if(tipoUtente === Ruoli.amministratore){
         <button mat-menu-item routerLink="/dashboard">Dashboard
             <mat-icon>apps</mat-icon>
         </button>
@@ -30,7 +30,7 @@
             <mat-icon>add</mat-icon>
         </button>
         <div>
-            <button mat-menu-item routerLink="">Logout
+            <button mat-menu-item (click)="logout()">Logout
                 <mat-icon>logout</mat-icon>
             </button>
 

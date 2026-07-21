@@ -6,6 +6,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './service/dataservice/in-memory-data-service';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppHttpInterceptorService } from './service/dataservice/AppHttpInterceptorService';
+import { Interceptor } from './service/interceptors/interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,7 +16,7 @@ export const appConfig: ApplicationConfig = {
 
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AppHttpInterceptorService,
+      useClass: Interceptor,
       multi: true
     },
     /*

@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { ChangeDetectorRef } from '@angular/core';
 import { SearchPrenotazione } from '../search-prenotazione/search-prenotazione';
+import { Ruoli } from '../model/Ruoli';
 
 @Component({
   selector: 'app-lista-prenotazioni',
@@ -20,6 +21,9 @@ import { SearchPrenotazione } from '../search-prenotazione/search-prenotazione';
   styleUrl: './lista-prenotazioni.css',
 })
 export class ListaPrenotazioni {
+
+  readonly Ruoli = Ruoli;
+
   constructor(private prenotazioneService: PrenotazioneService,
   ) { }
 
@@ -35,6 +39,10 @@ export class ListaPrenotazioni {
     last: true,
     empty: true,
   });
+
+
+  loading = signal<boolean>(true);
+
   tableHeader = signal<IColumnDef<any>[]>([]);
   url = signal<String>('/prenotazione/modifica/');
 
@@ -54,16 +62,18 @@ export class ListaPrenotazioni {
       console.log(this.userId());
       console.log(this.tipoUtente());
 
-      if (this.tipoUtente() === "manager") {
+      if (this.tipoUtente() === Ruoli.amministratore) {
         this.tableHeader.set(this.prenotazioneService.getHeader('manager'));
 
-      } else if (this.tipoUtente() === "user") {
+      } else if (this.tipoUtente() === Ruoli.utente) {
         this.tableHeader.set(this.prenotazioneService.getHeader('user'));
       }
 
       this.prenotazioniTest.set(prenotazioni);
       console.log(this.prenotazioniTest());
       console.log(this.tableHeader());
+      this.loading.set(false);
+
 
     })
   }
@@ -78,7 +88,7 @@ export class ListaPrenotazioni {
   aPagina(page: Number) {
     console.log(page);
 
-    if (this.tipoUtente() === "manager") {
+    if (this.tipoUtente() === Ruoli.amministratore) {
       this.prenotazioneService.getAllPrenotazioniByFilter(this.searchPrenotazione, page).subscribe(prenotazioni => {
         this.prenotazioniTest.set(prenotazioni);
         this.tableHeader.set(this.prenotazioneService.getHeader('manager'));
@@ -86,14 +96,17 @@ export class ListaPrenotazioni {
         console.log("dal metodo aPagina");
         console.log(this.prenotazioniTest);
         console.log(this.searchPrenotazione);
+        this.loading.set(false);
+
 
       });
-    } else if (this.tipoUtente() === "user") {
+    } else if (this.tipoUtente() === Ruoli.utente) {
       this.prenotazioneService
         .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId(), page)
         .subscribe(prenotazioni => {
           this.prenotazioniTest.set(prenotazioni);
           this.tableHeader.set(this.prenotazioneService.getHeader('user'));
+          this.loading.set(false);
 
         });
     }
@@ -120,7 +133,7 @@ export class ListaPrenotazioni {
 
 
   loadPrenotazioni(id: Number, tipoUtente: String) {
-    if (this.tipoUtente() === "manager") {
+    if (this.tipoUtente() === Ruoli.amministratore) {
       this.prenotazioneService.getAllPrenotazioniByFilter(this.searchPrenotazione, 0).subscribe(prenotazioni => {
         this.prenotazioniTest.set(prenotazioni);
         this.tableHeader.set(this.prenotazioneService.getHeader('manager'));
@@ -128,13 +141,15 @@ export class ListaPrenotazioni {
         console.log("dal metodo aPagina");
         console.log(this.prenotazioniTest);
         console.log(this.searchPrenotazione);
+        this.loading.set(false);
       });
-    } else if (this.tipoUtente() === "user") {
+    } else if (this.tipoUtente() === Ruoli.utente) {
       this.prenotazioneService
         .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId(), 0)
         .subscribe(prenotazioni => {
           this.prenotazioniTest.set(prenotazioni);
           this.tableHeader.set(this.prenotazioneService.getHeader('user'));
+          this.loading.set(false);
         });
     }
   }

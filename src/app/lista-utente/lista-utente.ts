@@ -5,7 +5,7 @@ import { UtenteService } from '../service/utente/utente-service';
 import { USER_LIST } from '../model/constant';
 import { Table } from '../table/table';
 import { Location } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Page } from '../model/Page';
 import { Toolbar } from '../toolbar/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -19,8 +19,10 @@ import { MatDividerModule } from '@angular/material/divider';
 })
 export class ListaUtente {
 
+  loading = signal<boolean>(true);
+
   constructor(private utenteService: UtenteService,
-  ) { }
+  private router: Router) { }
 
 
   utenti = signal<Page<UtenteDTO>>({
@@ -46,19 +48,26 @@ export class ListaUtente {
       this.utentiHeader.set(USER_LIST);
       this.utenti.set(utenti);
       this.tipoUtente.set(sessionStorage.getItem("tipoUtente")!);
+      this.loading.set(false);
     });
 
   }
 
-  eliminaPrenotazioneParent(value: Number) {
+  eliminaUtenteParent(value: Number) {
     console.log(value);
-    this.utenteService.eliminaUtente(value).subscribe(() => {
-      this.utenteService.getUtentiPageOne().subscribe(utenti => {
-        this.utentiHeader.set(USER_LIST);
-        this.utenti.set(utenti);
-        this.tipoUtente.set(sessionStorage.getItem("tipoUtente")!);
+    if (value === parseInt(sessionStorage.getItem('userId')!)) {
+      //non può eliminare se stesso!!
+      this.router.navigate(['forbidden']);
+    } else {
+      this.utenteService.eliminaUtente(value).subscribe(() => {
+        this.utenteService.getUtentiPageOne().subscribe(utenti => {
+          this.utentiHeader.set(USER_LIST);
+          this.utenti.set(utenti);
+          this.tipoUtente.set(sessionStorage.getItem("tipoUtente")!);
+          this.loading.set(false);
+        });
       });
-    });
+    }
   }
 
   aPagina(page: Number) {
@@ -66,6 +75,7 @@ export class ListaUtente {
       this.utentiHeader.set(USER_LIST);
       this.utenti.set(utenti);
       this.tipoUtente.set(sessionStorage.getItem("tipoUtente")!);
+      this.loading.set(false);
     });
   }
 }

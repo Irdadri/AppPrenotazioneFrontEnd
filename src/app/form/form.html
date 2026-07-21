@@ -63,6 +63,8 @@
 
                 @if (form.get(field.name)?.errors?.['required']) {
                   This field is required
+                }@else if(form.get(field.name)?.errors?.['duplicateKey']){
+                  l'utente esiste già
                 }
 
               </small>

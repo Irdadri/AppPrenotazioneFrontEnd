@@ -13,6 +13,7 @@ export class UtenteService {
     private url = '/get-user-list';
     private mockUrl = '/get-mock-user';
     private realUrl = "http://localhost:8080/dashboard/";
+    private secondUrl = "http://localhost:9090/auth/";
 
     getUtentiPageOne(): Observable<Page<UtenteDTO>> {
         return this.http.get<Page<UtenteDTO>>(this.realUrl + "utenti");
@@ -45,5 +46,13 @@ export class UtenteService {
 
     eliminaUtente(id: Number) {
         return this.http.delete<void>(this.realUrl + "deleteUtente/" + id);
+    }
+
+    aggiungiOAggiornaUtente(utente: UtenteRequest){
+        return this.http.post(this.secondUrl + "creaUtente", utente);
+    }
+    
+    elimina(email: String){
+        return this.http.delete<void>(this.secondUrl + "deleteUtente/" + email);
     }
 }

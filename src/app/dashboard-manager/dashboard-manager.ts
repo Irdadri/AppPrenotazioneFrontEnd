@@ -18,8 +18,10 @@ export class DashboardManager {
   ngOnInit(){
     this.userId.set(parseInt(sessionStorage.getItem("userId")!));
     console.log("utente" + this.userId);
+    
     this.tipoUtente.set(sessionStorage.getItem("tipoUtente")!);
     console.log("tipo utente" + this.tipoUtente);
+
   }
 
 

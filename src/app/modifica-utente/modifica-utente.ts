@@ -32,7 +32,7 @@ export class ModificaUtente {
       this.utenteService.getUtente(this.userId).subscribe(utenti => {
         this.utenti.set(utenti);
         console.log("da utenti modifica")
-
+        console.log(this.utenti());
         this.ruoliService.getRuoliUtente().subscribe(ruoli => {
           this.listaRuoli.set(ruoli);
         })
@@ -57,11 +57,12 @@ export class ModificaUtente {
     this.modifiche = formData as UtenteRequest;
     this.utenteService.modificaUtente(this.modifiche, this.userId!).subscribe({
       next: () => {
+         this.utenteService.aggiungiOAggiornaUtente(this.modifiche!).subscribe();
         this.router.navigate(['/listaUtenti']);
       }
     });;
     console.log(this.modifiche);
-
+    
   }
 
 }

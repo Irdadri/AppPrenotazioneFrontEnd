@@ -23,6 +23,9 @@ export class Form {
 
   additionalData = input<any>();
 
+
+  formCreated = output<FormGroup>();
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -40,6 +43,7 @@ export class Form {
       formControls[field.name] = [null, field.validators || []];
     });
     this.form = this.fb.group(formControls);
+    this.formCreated.emit(this.form);
   }
 
 

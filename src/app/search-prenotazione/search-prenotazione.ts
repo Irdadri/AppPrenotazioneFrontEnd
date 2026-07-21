@@ -5,6 +5,7 @@ import { FormDefinitions } from '../model/FormDefinition';
 import { PrenotazioneService } from '../service/prenotazione/prenotazione-service';
 
 import { Form } from '../form/form';
+import { Ruoli } from '../model/Ruoli';
 
 @Component({
   selector: 'app-search-prenotazione',
@@ -13,6 +14,7 @@ import { Form } from '../form/form';
   styleUrl: './search-prenotazione.css',
 })
 export class SearchPrenotazione {
+  readonly Ruoli = Ruoli;
 
   constructor(private prenotazioneService: PrenotazioneService, private cdr: ChangeDetectorRef) { }
 
@@ -40,9 +42,9 @@ export class SearchPrenotazione {
     this.tipoUtente = sessionStorage.getItem('tipoUtente')!;
     this.userId = parseInt(sessionStorage.getItem("userId")!);
 
-    if (this.tipoUtente === "manager") {
+    if (this.tipoUtente === Ruoli.amministratore) {
       this.cercaPrenotazione.set(this.cercaPrenotazioneFormConfig);
-    } else if (this.tipoUtente === "user") {
+    } else if (this.tipoUtente === Ruoli.utente) {
       this.cercaPrenotazione.set(this.cercaPrenotazioniUtente);
     }
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LoginRequest } from '../model/LoginRequest';
 import { LoginService } from '../service/login/login-service';
@@ -13,6 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 import { Utente } from '../model/Utente';
+import { LoginJwtService } from '../service/login/login-jwt-service';
+
 
 
 @Component({
@@ -24,7 +26,7 @@ import { Utente } from '../model/Utente';
 export class Login {
 
 
-  constructor(private loginService: LoginService, private router: Router) {
+  constructor(private loginService: LoginJwtService, private router: Router) {
   }
 
   loginRequest: LoginRequest = {
@@ -33,7 +35,7 @@ export class Login {
   }
 
   user: Utente | null = null;
-  error = false;
+  error = signal<boolean>(false);
 
   loginForm = new FormGroup({
     email: new FormControl(''),
@@ -43,17 +45,19 @@ export class Login {
   login() {
     this.loginRequest = this.loginForm.value as LoginRequest;
 
-    this.loginService.login(this.loginRequest).subscribe(utente => {
-      this.user = utente;
-      console.log(this.user);
-      if (this.user) {
-        this.router.navigate(['dashboard/']);
-        sessionStorage.setItem("tipoUtente", this.user.tipoUtente.toString());
-        sessionStorage.setItem("userId", this.user.id.toString());
-        sessionStorage.setItem("user", JSON.stringify(this.user));
-      } else {
-        this.error = true;
+    this.loginService.login(this.loginRequest).subscribe({
+      next: data => {
+        console.log(sessionStorage.getItem('AuthToken'));
+        console.log(data);
+        console.log(sessionStorage.getItem("tipoUtente"));
+        this.error.set(false);
+        this.router.navigate(['dashboard']);
+      },
+      error: (error) => {
+       this.error.set(true);
       }
-    })
+    });
+
+
   }
 }
