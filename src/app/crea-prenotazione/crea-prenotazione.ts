@@ -41,7 +41,7 @@ export class CreaPrenotazione {
 
   onFormSubmit(formData: any) {
     this.datiPrenotazione = formData as PrenotazioneRequest;
-    this.prenotazioneService.aggiungiPrenotazione(this.datiPrenotazione, parseInt(sessionStorage.getItem("userId")!)).subscribe({
+    this.prenotazioneService.aggiungiPrenotazione(this.datiPrenotazione, sessionStorage.getItem("userKey")!).subscribe({
       next: () => {
         this.router.navigate(['/dashboard']);
       }

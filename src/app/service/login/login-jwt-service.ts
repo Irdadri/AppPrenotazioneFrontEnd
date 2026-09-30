@@ -32,7 +32,7 @@ export class LoginJwtService {
 
                     sessionStorage.setItem("utente", loginRequest.email.toString());
                     sessionStorage.setItem("AuthToken", `Bearer ${data.token}`);
-                    sessionStorage.setItem("userId", decoded.id);
+                    sessionStorage.setItem("userKey", decoded.userKey);
                     sessionStorage.setItem("tipoUtente", decoded.role[0].authority);
                     return data;
                 }

@@ -29,12 +29,12 @@ export class PrenotazioneService {
         return this.http.get<Page<PrenotazioneDTO>>(this.marioprenotazioneURl);
     }
 
-    getPrenotazioniByPage(page: Number, size: Number, idUser: Number): Observable<Page<PrenotazioneDTO>> {
-        return this.http.get<Page<PrenotazioneDTO>>(this.realUrl + "?page=" + page + "&" + "size=" + size + "&" + "idUser=" +  + idUser);
+    getPrenotazioniByPage(page: Number, size: Number, userKey: String): Observable<Page<PrenotazioneDTO>> {
+        return this.http.get<Page<PrenotazioneDTO>>(this.realUrl + "?userKey=" +  + userKey + "&" + "page=" + page + "&" + "size=" + size + "&" );
     }
 
-    getPrenotazioniPageOne(idUtente: Number): Observable<Page<PrenotazioneDTO>> {
-        return this.http.get<Page<PrenotazioneDTO>>(this.realUrl + "?idUser=" + idUtente);
+    getPrenotazioniPageOne(userKey: String): Observable<Page<PrenotazioneDTO>> {
+        return this.http.get<Page<PrenotazioneDTO>>(this.realUrl + "?userKey=" + userKey);
     }
 
     getPrenotazioneById(id: Number) {
@@ -52,8 +52,8 @@ export class PrenotazioneService {
 
     }
 
-    getPrenotazioneUtenteByFilter(filtro: PrenotazioniFiltro, idUser: Number, page:Number): Observable<Page<PrenotazioneDTO>>{
-       return this.http.post<Page<PrenotazioneDTO>>(this.realUrl + "searchPrenotazioniUtente?idUser=" + idUser + "&page=" + page, filtro);
+    getPrenotazioneUtenteByFilter(filtro: PrenotazioniFiltro, userKey: String, page:Number): Observable<Page<PrenotazioneDTO>>{
+       return this.http.post<Page<PrenotazioneDTO>>(this.realUrl + "searchPrenotazioniUtente?userKey=" + userKey + "&page=" + page, filtro);
     }
 
     getAllPrenotazioniByFilter(filtro:PrenotazioniFiltro, page: Number): Observable<Page<PrenotazioneDTO>>{
@@ -66,8 +66,8 @@ export class PrenotazioneService {
         );
     }
 
-    aggiungiPrenotazione(datiPrenotazione: PrenotazioneRequest, idUser: Number) {
-        return this.http.post<PrenotazioneRequest>(this.realUrl + "prenotazione" + "?idUser=" + idUser,
+    aggiungiPrenotazione(datiPrenotazione: PrenotazioneRequest, userKey: String) {
+        return this.http.post<PrenotazioneRequest>(this.realUrl + "prenotazione" + "?userKey=" + userKey,
             datiPrenotazione
         );
     }

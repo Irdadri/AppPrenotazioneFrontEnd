@@ -16,7 +16,6 @@ export class Forbidden {
     this.auth.clearAll();
   }
   onClick() {
-
     this.router.navigate(['']);
   }
 }

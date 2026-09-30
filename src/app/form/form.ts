@@ -63,6 +63,10 @@ export class Form {
 
 
   onSubmit(): void {
+    console.log('SUBMIT PREMUTO');
+    console.log('STATUS:', this.form.status);
+    console.log('VALUE:', this.form.value);
+
     if (this.form.valid) {
       this.formSubmit.emit(this.form.value);
       console.log(this.form.value);

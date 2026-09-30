@@ -46,7 +46,7 @@ export class ListaPrenotazioni {
   tableHeader = signal<IColumnDef<any>[]>([]);
   url = signal<String>('/prenotazione/modifica/');
 
-  userId = input.required<Number>();
+  userKey = input.required<String>();
   tipoUtente = input.required<String>();
   tableTitle = signal<String>("Prenotazioni");
 
@@ -57,9 +57,9 @@ export class ListaPrenotazioni {
   };
 
   ngOnInit() {
-    this.prenotazioneService.getPrenotazioniPageOne(this.userId()).subscribe(prenotazioni => {
+    this.prenotazioneService.getPrenotazioniPageOne(this.userKey()).subscribe(prenotazioni => {
 
-      console.log(this.userId());
+      console.log(this.userKey());
       console.log(this.tipoUtente());
 
       if (this.tipoUtente() === Ruoli.amministratore) {
@@ -81,7 +81,7 @@ export class ListaPrenotazioni {
   eliminaPrenotazioneParent(value: Number) {
     console.log(value);
     this.prenotazioneService.eliminaPrenotazione(value).subscribe(() => {
-      this.loadPrenotazioni(this.userId(), this.tipoUtente());
+      this.loadPrenotazioni(this.userKey(), this.tipoUtente());
     });
   }
 
@@ -102,7 +102,7 @@ export class ListaPrenotazioni {
       });
     } else if (this.tipoUtente() === Ruoli.utente) {
       this.prenotazioneService
-        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId(), page)
+        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userKey(), page)
         .subscribe(prenotazioni => {
           this.prenotazioniTest.set(prenotazioni);
           this.tableHeader.set(this.prenotazioneService.getHeader('user'));
@@ -124,15 +124,12 @@ export class ListaPrenotazioni {
     }
     console.log(this.searchPrenotazione);
 
-    this.loadPrenotazioni(this.userId(), this.tipoUtente());
+    this.loadPrenotazioni(this.userKey(), this.tipoUtente());
   }
 
 
 
-
-
-
-  loadPrenotazioni(id: Number, tipoUtente: String) {
+  loadPrenotazioni(userKey: String, tipoUtente: String) {
     if (this.tipoUtente() === Ruoli.amministratore) {
       this.prenotazioneService.getAllPrenotazioniByFilter(this.searchPrenotazione, 0).subscribe(prenotazioni => {
         this.prenotazioniTest.set(prenotazioni);
@@ -145,7 +142,7 @@ export class ListaPrenotazioni {
       });
     } else if (this.tipoUtente() === Ruoli.utente) {
       this.prenotazioneService
-        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userId(), 0)
+        .getPrenotazioneUtenteByFilter(this.searchPrenotazione, this.userKey(), 0)
         .subscribe(prenotazioni => {
           this.prenotazioniTest.set(prenotazioni);
           this.tableHeader.set(this.prenotazioneService.getHeader('user'));

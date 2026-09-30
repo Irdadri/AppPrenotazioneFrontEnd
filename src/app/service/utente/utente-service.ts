@@ -32,25 +32,27 @@ export class UtenteService {
         return this.http.get<Page<UtenteDTO>>('/getPage' + page);
     }
 
-    getUtente(id:Number):Observable<UtenteDTO>{
-        return this.http.get<UtenteDTO>(this.realUrl + "utente?idUtente=" + id);
+    getUtente(userKey:String):Observable<UtenteDTO>{
+        return this.http.get<UtenteDTO>(this.realUrl + "utente?userKey=" + userKey);
     }
 
     getMockUtenti():Observable<MockUser[]>{
         return this.http.get<MockUser[]>(this.mockUrl);
     }
 
-    modificaUtente(modifiche: UtenteRequest, id: Number) {
-        return this.http.put<UtenteRequest>(this.realUrl + "aggiornaUtente?idUser=" + id, modifiche);
+    modificaUtente(modifiche: UtenteRequest, userKey: String) {
+        return this.http.put<UtenteRequest>(this.realUrl + "aggiornaUtente?userKey=" + userKey, modifiche);
     }
 
-    eliminaUtente(id: Number) {
-        return this.http.delete<void>(this.realUrl + "deleteUtente/" + id);
+    eliminaUtente(userKey: String) {
+        return this.http.delete<void>(this.realUrl + "deleteUser?userKey=" + userKey);
     }
 
-    aggiungiOAggiornaUtente(utente: UtenteRequest){
+    /*
+    creaUtente(utente: UtenteRequest){
         return this.http.post(this.secondUrl + "creaUtente", utente);
     }
+        */
     
     elimina(email: String){
         return this.http.delete<void>(this.secondUrl + "deleteUtente/" + email);

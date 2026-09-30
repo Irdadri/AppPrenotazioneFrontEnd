@@ -58,6 +58,7 @@ export class ModificaPrenotazione {
       this.prenotazioneService.getPrenotazioneById(this.prenotazioneId).subscribe(prenotazione => {
         prenotazione.dataInizio = prenotazione.dataInizio.replace(' ', 'T');
         prenotazione.dataFine = prenotazione.dataFine.replace(' ', 'T');
+        console.log(prenotazione.npostazione);
         this.prenotazione.set((prenotazione));
         console.log("dalla subscribe in modifica")
         console.log(this.prenotazione());

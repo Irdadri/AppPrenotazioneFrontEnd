@@ -39,7 +39,7 @@ export class ListaUtente {
 
   utentiHeader = signal<IColumnDef<any>[]>([]);
   url = signal<String>('/utente/modfica/');
-  userId = signal<Number>(0);
+  userKey = signal<String>('');
   tipoUtente = signal<String>('');
   tableTitle = signal<String>("Utenti");
   pagina = "listaUtenti";
@@ -53,9 +53,9 @@ export class ListaUtente {
 
   }
 
-  eliminaUtenteParent(value: Number) {
+  eliminaUtenteParent(value: any) {
     console.log(value);
-    if (value === parseInt(sessionStorage.getItem('userId')!)) {
+    if (value === parseInt(sessionStorage.getItem('userKey')!)) {
       //non può eliminare se stesso!!
       this.router.navigate(['forbidden']);
     } else {

@@ -17,7 +17,7 @@ import { FormDefinitions } from '../model/FormDefinition';
 export class ModificaUtente {
 
   utenti = signal<UtenteDTO | null>(null);
-  userId?: Number;
+  userKey?: String;
   modifiche?: UtenteRequest;
   listaRuoli = signal<String[]>([]);
 
@@ -27,9 +27,9 @@ export class ModificaUtente {
   }
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.userId = parseInt(params.get('userId')!);
-      console.log(this.userId);
-      this.utenteService.getUtente(this.userId).subscribe(utenti => {
+      this.userKey = params.get('userKey')!;
+      console.log(this.userKey);
+      this.utenteService.getUtente(this.userKey!).subscribe(utenti => {
         this.utenti.set(utenti);
         console.log("da utenti modifica")
         console.log(this.utenti());
@@ -55,9 +55,8 @@ export class ModificaUtente {
 
   onFormSubmit(formData: any) {
     this.modifiche = formData as UtenteRequest;
-    this.utenteService.modificaUtente(this.modifiche, this.userId!).subscribe({
+    this.utenteService.modificaUtente(this.modifiche, this.userKey!).subscribe({
       next: () => {
-         this.utenteService.aggiungiOAggiornaUtente(this.modifiche!).subscribe();
         this.router.navigate(['/listaUtenti']);
       }
     });;

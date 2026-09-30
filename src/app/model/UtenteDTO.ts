@@ -1,5 +1,5 @@
 export interface UtenteDTO{
-    id: Number,
+    userKey: String,
     nome: String,
     cognome: String,
     email:String, 

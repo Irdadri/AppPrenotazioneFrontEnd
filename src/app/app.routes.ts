@@ -16,7 +16,7 @@ export const routes: Routes = [
     { path: 'dashboard', component: DashboardManager, canActivate:[RouteGuardService], data: {roles: [Ruoli.amministratore, Ruoli.utente]}},
    // { path: 'dashboard/:id/utente', component: DashboardUtente },
     { path: 'prenotazione/modifica/:prenotazioneId', component: ModificaPrenotazione, canActivate:[RouteGuardService], data: {roles: [Ruoli.amministratore, Ruoli.utente]}},
-    { path: 'utente/modfica/:userId', component: ModificaUtente, canActivate:[RouteGuardService], data: {roles: [Ruoli.amministratore]}},
+    { path: 'utente/modfica/:userKey', component: ModificaUtente, canActivate:[RouteGuardService], data: {roles: [Ruoli.amministratore]}},
     { path: 'creaUtente', component: CreaUtente, canActivate:[RouteGuardService], data: {roles: [Ruoli.amministratore]} },
     { path: 'listaUtenti', component: ListaUtente, canActivate:[RouteGuardService], data: {roles: [Ruoli.amministratore]} },
     { path: 'creaPrenotazione', component: CreaPrenotazione, canActivate:[RouteGuardService], data: {roles: [Ruoli.amministratore, Ruoli.utente]} },

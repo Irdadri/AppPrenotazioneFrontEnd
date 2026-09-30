@@ -17,12 +17,21 @@
             @for(item of tableHeader(); track item){
             <td>{{datas[item.field]}}</td>
             }
+            @if(datas.id != null){
             <td><button mat-icon-button [routerLink]="[url(), datas.id]">
                     <mat-icon>edit</mat-icon>
                 </button></td>
             <td><button mat-icon-button (click)="eliminaEvent(datas.id)">
                     <mat-icon>delete</mat-icon>
                 </button></td>
+            }@else if(datas.userKey != null){
+                 <td><button mat-icon-button [routerLink]="[url(), datas.userKey]">
+                    <mat-icon>edit</mat-icon>
+                </button></td>
+            <td><button mat-icon-button (click)="eliminaEvent(datas.userKey)">
+                    <mat-icon>delete</mat-icon>
+                </button></td>
+            }
         </tr>
         
         }
